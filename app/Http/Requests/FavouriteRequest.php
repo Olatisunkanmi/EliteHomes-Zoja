@@ -22,8 +22,9 @@ class FavouriteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['required', 'exists:users,uuid'],
-            'product_id' => ['required', 'exists:properties,id']
+            // 'user_id' => ['required', 'exists:users,uuid'],
+            // 'product_id' => ['required', 'exists:properties,id']
+
         ];
     }
 }

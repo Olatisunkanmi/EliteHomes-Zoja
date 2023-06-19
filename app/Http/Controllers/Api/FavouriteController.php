@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Favourite;
+use App\Models\{Favourite, Property};
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\FavouriteRequest;
 use App\Http\Resources\FavouriteResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class FavouriteController extends Controller
 {
@@ -35,24 +36,27 @@ class FavouriteController extends Controller
     }
 
 
-    public function store(FavouriteRequest $request): JsonResponse
+    public function store(FavouriteRequest $request, string $property): JsonResponse
     {
         try {
 
-            $user = $request->user();
-            $userInput = $request->user()?->id;
-            $favourite = Favourite::create($request->validated());
+            $user = $request->user()->id;
+            $property =  Property::findOrFail($property);
+
+            $favourite = Favourite::create([
+                'user_id' => $user,
+                'property_id' => $property->id
+            ]);
 
             return response()->json([
                 'message' => 'Products added to favorites.',
-                'data' => $favourite,
-                'status' => 200
-            ]);
+                'data' => ' $favourite',
+
+            ], Response::HTTP_CREATED);
         } catch (\Throwable $e) {
             return response()->json([
-                'message' => 'PRoduct already exists in favourite',
-                'status' => 403
-            ]);
+                'message' => 'Property not found',
+            ], Response::HTTP_NOT_FOUND);
         }
     }
 

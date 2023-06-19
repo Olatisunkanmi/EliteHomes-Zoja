@@ -12,12 +12,25 @@ class PropertySeeder extends Seeder
     /**
      * Run the database seeds.
      */
+    // public function run(): void
+    // {
+    //     Property::factory()->count(2)
+    //         ->forUser([
+    //             'username' => 'user',
+    //         ])
+    //         ->create();
+    // }
+
     public function run(): void
     {
-        Property::factory()->count(10)
-            ->forUser([
-                'username' => 'user',
-            ])
-            ->create();
+        $user = User::where('username',  'user')->first();
+
+        if ($user) {
+            Property::factory()->count(10)
+                ->forUser([
+                    'username' => 'user',
+                ])
+                ->create();
+        };
     }
 }

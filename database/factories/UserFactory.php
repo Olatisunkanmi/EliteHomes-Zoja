@@ -24,7 +24,7 @@ class UserFactory extends Factory
             // 'email_verified_at' => now(),
             'first_name' => fake()->firstName(),
             'last_name' => fake()->lastName(),
-            // 'profile_picture' => fake()->imageUrl(),
+            'profile_picture' => fake()->imageUrl(),
             'password' => fake()->password(),
             'confirm_password' => fake()->password(),
             'phone_number' => fake()->phoneNumber(),

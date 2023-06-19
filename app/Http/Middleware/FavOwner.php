@@ -19,22 +19,21 @@ class FavOwner
      */
     public function handle(Request $request, Closure $next): Response
     {
-    
 
-     try {
-        $favouriteId = $request->route('favourite');
-        $auth = auth()->id();
-        $fav = Favourite::where('id', $favouriteId)
-                  ->where('user_id', $auth)->exists();
-                  
-    if ($fav == 0) 
-        return response()->json([
-        'message' => 'You are not authorized to perform this action'
-    ], Response::HTTP_UNAUTHORIZED);
-     } catch(\Throwable $th) {
 
-     }
-    return $next($request);
+        try {
+            $favouriteId = $request->route('favourite');
+            $auth = auth()->id();
+            $fav = Favourite::where('id', $favouriteId)
+                ->where('user_id', $auth)->exists();
+
+
+            if ($fav == 0)
+                return response()->json([
+                    'message' => 'You are not authorized to perform this action'
+                ], Response::HTTP_UNAUTHORIZED);
+        } catch (\Throwable $th) {
+        }
+        return $next($request);
     }
 }
-
